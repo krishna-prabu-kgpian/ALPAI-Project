@@ -1,0 +1,122 @@
+{
+  "sha256": "ea3708597f233bf71068a6d42d91d375621dd8dbb19b2909af723a6a4c04220d",
+  "row_count": 3602,
+  "timestamp_utc": "2026-11-06T11:43:39.002267+00:00",
+  "versions": {
+    "yfinance": "1.8.0",
+    "pandas": "2.2.3",
+    "numpy": "2.2.4"
+  },
+  "tickers": [
+    "NVDA",
+    "AAPL",
+    "MSFT",
+    "GOOGL",
+    "AMZN"
+  ],
+  "start": "2012-01-01",
+  "end": "2026-05-01",
+  "auto_adjust": true,
+  "columns": [
+    [
+      "NVDA",
+      "Open"
+    ],
+    [
+      "NVDA",
+      "High"
+    ],
+    [
+      "NVDA",
+      "Low"
+    ],
+    [
+      "NVDA",
+      "Close"
+    ],
+    [
+      "NVDA",
+      "Volume"
+    ],
+    [
+      "AAPL",
+      "Open"
+    ],
+    [
+      "AAPL",
+      "High"
+    ],
+    [
+      "AAPL",
+      "Low"
+    ],
+    [
+      "AAPL",
+      "Close"
+    ],
+    [
+      "AAPL",
+      "Volume"
+    ],
+    [
+      "MSFT",
+      "Open"
+    ],
+    [
+      "MSFT",
+      "High"
+    ],
+    [
+      "MSFT",
+      "Low"
+    ],
+    [
+      "MSFT",
+      "Close"
+    ],
+    [
+      "MSFT",
+      "Volume"
+    ],
+    [
+      "GOOGL",
+      "Open"
+    ],
+    [
+      "GOOGL",
+      "High"
+    ],
+    [
+      "GOOGL",
+      "Low"
+    ],
+    [
+      "GOOGL",
+      "Close"
+    ],
+    [
+      "GOOGL",
+      "Volume"
+    ],
+    [
+      "AMZN",
+      "Open"
+    ],
+    [
+      "AMZN",
+      "High"
+    ],
+    [
+      "AMZN",
+      "Low"
+    ],
+    [
+      "AMZN",
+      "Close"
+    ],
+    [
+      "AMZN",
+      "Volume"
+    ]
+  ]
+}
