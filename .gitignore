@@ -9,6 +9,8 @@ htmlcov/
 .venv/
 venv/
 env/
+!src/env/
+!src/env/*.py
 
 # Local environment and editor files
 .env

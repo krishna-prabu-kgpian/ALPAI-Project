@@ -41,8 +41,8 @@ If running low on time, make cuts in this strict order and log each in the Decis
 | **05** | Stock & Market Feature Engineering | Lane A | 04 | `DONE` | |
 | **06** | Fit-Window Feature Normalization (z-score) | Lane A | 05 | `DONE` | |
 | **07** | Stage 1 Market-Regime Model (GMM) | Lane A | 06 | `DONE` | |
-| **08** | Portfolio Engine & Cost Model | Lane B | 04, 05 | `TODO` | |
-| **09** | Action Space & Observation Construction | Lane B | 06, 07, 08 | `TODO` | |
+| **08** | Portfolio Engine & Cost Model | Lane B | 04, 05 | `DONE` | |
+| **09** | Action Space & Observation Construction | Lane B | 06, 07, 08 | `DONE` | |
 | **10** | Gymnasium Environment Construction | Lane B | 09 | `TODO` | |
 | **11** | Risk-Sensitive Reward Function | Lane B | 10 | `TODO` | |
 | **12** | Curriculum Sampler & Split Integrity | Lane B | 10 | `TODO` | |
@@ -190,10 +190,10 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Build the deterministic portfolio transaction, valuation, and transaction fee engine.
 
 * **Sub-tasks:**
-  - [ ] **8.1** Create pure valuation functions `src/env/portfolio.py`: `apply_trades(holdings, target_weights, cost_model)` and `mark_to_market(holdings, returns)`.
-  - [ ] **8.2** Create transaction fee model `src/env/costs.py` enforcing $10\text{ bps}$ ($c=0.0010$) on traded notional of risky assets against drifted pre-trade weights.
-  - [ ] **8.3** Add optional volatility-scaled slippage logic per `specs.md` §13 (`B-05`).
-  - [ ] **8.4** Implement tests in `tests/test_costs.py`: `T-06` (100 HOLD steps under drift yield $0$ cost), `T-07` (hand-computed $10\%$ asset trade matches cost $0.0002$), and `T-16` (volatility-scaled slippage formula bounds).
+  - [x] **8.1** Create pure valuation functions `src/env/portfolio.py`: `apply_trades(holdings, target_weights, cost_model)` and `mark_to_market(holdings, returns)`.
+  - [x] **8.2** Create transaction fee model `src/env/costs.py` enforcing $10\text{ bps}$ ($c=0.0010$) on traded notional of risky assets against drifted pre-trade weights.
+  - [x] **8.3** Add optional volatility-scaled slippage logic per `specs.md` §13 (`B-05`).
+  - [x] **8.4** Implement tests in `tests/test_costs.py`: `T-06` (100 HOLD steps under drift yield $0$ cost), `T-07` (hand-computed $10\%$ asset trade matches cost $0.0002$), and `T-16` (volatility-scaled slippage formula bounds).
 
 * **Artifacts Created:** `src/env/portfolio.py`, `src/env/costs.py`, `tests/test_costs.py`
 * **Verification Criteria:** Tests `T-06`, `T-07`, and `T-16` pass.
@@ -205,10 +205,10 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Define discrete 31-action rebalancing map and construct continuous observation vector.
 
 * **Sub-tasks:**
-  - [ ] **9.1** Build 31-action lookup table ($0=\text{HOLD}$, $1\dots30=\text{move } 10\% \text{ between buckets}$) and export mapping to `artifacts/action_table.json`.
-  - [ ] **9.2** Implement observation aggregator concatenating 30 z-scored features, 6 portfolio weights, and 3 regime probabilities into a 39-D vector.
-  - [ ] **9.3** Implement feature configuration toggle flags (`include_weights_in_obs`, `regime.enabled`, `regime.include_novelty`).
-  - [ ] **9.4** Write test `T-04` in `tests/test_env.py`: confirm action table bijection, action $0$ equality to HOLD, and exclusion of self-trades (`from == to`).
+  - [x] **9.1** Build 31-action lookup table ($0=\text{HOLD}$, $1\dots30=\text{move } 10\% \text{ between buckets}$) and export mapping to `artifacts/action_table.json`.
+  - [x] **9.2** Implement observation aggregator concatenating 30 z-scored features, 6 portfolio weights, and 3 regime probabilities into a 39-D vector.
+  - [x] **9.3** Implement feature configuration toggle flags (`include_weights_in_obs`, `regime.enabled`, `regime.include_novelty`).
+  - [x] **9.4** Write test `T-04` in `tests/test_env.py`: confirm action table bijection, action $0$ equality to HOLD, and exclusion of self-trades (`from == to`).
 
 * **Artifacts Created:** `artifacts/action_table.json`, observation assembly methods in `src/env/portfolio_env.py`, `tests/test_env.py`
 * **Verification Criteria:** Test `T-04` passes; sample vector observation matches input feature parquet files bitwise.
@@ -556,3 +556,5 @@ If running low on time, make cuts in this strict order and log each in the Decis
 | 2026-11-06 | Copilot assistant | Step 05 (5.1–5.6) | Added causal stock indicators and market features, warm-up-trimmed feature pipeline, metadata, and T-02 causality coverage at 50 seeded cut dates. Generated aligned feature outputs with 3,553 rows from 2012-03-14 and no NaN/inf. Tests: 24 passed, 18 xfailed. | — | Step 06 |
 | 2026-11-06 | Copilot assistant | Step 06 (6.1–6.5) | Added reusable fit-window scaler with persisted load/transform parameters; generated final (2012–2023) and tuning (2012–2021) scalers and normalized full-series parquets. T-03 verifies no post-window fitting. Full suite: 28 passed, 17 xfailed. Fit-window moments are near zero/unit variance before required ±5 clipping. | — | Step 07 |
 | 2026-11-06 | Copilot assistant | Step 07 (7.1–7.6) | Added fit-window market scaler + diagonal GMM, volatility-ordered probabilities, causal EMA, dual-window build/report pipeline, and T-18 tests. Generated final/tuning models and 3,553-row probability outputs. Corrected report to score 2022 validation only with the tuning model. Regime tests: 4 passed; full suite: 32 passed, 16 xfailed. | — | Step 08 |
+| 2026-11-06 | Copilot assistant | Step 08 (8.1–8.4) | Added deterministic portfolio trading/mark-to-market, 10 bps transaction costs, optional volatility-scaled slippage, and tests for T-05 through T-08 and T-16. Full suite: 40 passed, 11 xfailed. | — | Step 09 |
+| 2026-11-06 | Copilot assistant | Step 09 (9.1–9.4) | Added the canonical 31-action table, configurable observation assembly and artifact export. Verified T-04, configuration dimensions, and bitwise float32 parity with the stored feature and regime parquet rows. | — | Step 10 |
