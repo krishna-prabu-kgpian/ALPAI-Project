@@ -220,11 +220,11 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Wrap portfolio engine and state space into a compliant Gymnasium environment interface.
 
 * **Sub-tasks:**
-  - [ ] **10.1** Implement `src/env/portfolio_env.py` adhering to standard `reset()` and `step()` Gymnasium signatures (returning 5-element tuples).
-  - [ ] **10.2** Implement reset options handler accepting execution window specifications or explicit index boundaries (`start_idx`, `length`).
-  - [ ] **10.3** Set environment episode initial conditions: portfolio value $V_0 = 1.0$, equal asset weights ($0.2$ each), zero cash.
-  - [ ] **10.4** Populate step step output `info` dict per `specs.md` `E-09`.
-  - [ ] **10.5** Implement tests `T-05` (10,000 random actions preserve weight non-negativity and unit sum) and `T-10` (`gymnasium.utils.env_checker.check_env` compliance).
+  - [x] **10.1** Implement `src/env/portfolio_env.py` adhering to standard `reset()` and `step()` Gymnasium signatures (returning 5-element tuples).
+  - [x] **10.2** Implement reset options handler accepting execution window specifications or explicit index boundaries (`start_idx`, `length`).
+  - [x] **10.3** Set environment episode initial conditions: portfolio value $V_0 = 1.0$, equal asset weights ($0.2$ each), zero cash.
+  - [x] **10.4** Populate step output `info` dict per `specs.md` `E-09`.
+  - [x] **10.5** Implement tests `T-05` (10,000 random actions preserve weight non-negativity and unit sum) and `T-10` (`gymnasium.utils.env_checker.check_env` compliance).
 
 * **Artifacts Created:** `src/env/portfolio_env.py`, updated `tests/test_env.py`
 * **Verification Criteria:** Tests `T-05` and `T-10` pass cleanly.
