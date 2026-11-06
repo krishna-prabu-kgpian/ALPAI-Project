@@ -40,7 +40,7 @@ If running low on time, make cuts in this strict order and log each in the Decis
 | **04** | Price Cleaning & Data Quality Proof | Lane A | 03 | `DONE` | |
 | **05** | Stock & Market Feature Engineering | Lane A | 04 | `DONE` | |
 | **06** | Fit-Window Feature Normalization (z-score) | Lane A | 05 | `DONE` | |
-| **07** | Stage 1 Market-Regime Model (GMM) | Lane A | 06 | `TODO` | |
+| **07** | Stage 1 Market-Regime Model (GMM) | Lane A | 06 | `DONE` | |
 | **08** | Portfolio Engine & Cost Model | Lane B | 04, 05 | `TODO` | |
 | **09** | Action Space & Observation Construction | Lane B | 06, 07, 08 | `TODO` | |
 | **10** | Gymnasium Environment Construction | Lane B | 09 | `TODO` | |
@@ -173,12 +173,12 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Train a Gaussian Mixture Model to output daily market regime probabilities without look-ahead leakage.
 
 * **Sub-tasks:**
-  - [ ] **7.1** Implement `src/regime/regime_model.py`: fit 3-component diagonal GMM (`n_init=5`, `random_state=0`) on z-scored market features.
-  - [ ] **7.2** Implement component sorting by ascending mean `m_vol20` ($0=\text{Calm}$, $1=\text{Choppy}$, $2=\text{Crisis}$).
-  - [ ] **7.3** Implement causal EMA smoothing ($\text{span}=5$) across per-day posterior probabilities (`predict_proba`).
-  - [ ] **7.4** Write `src/regime/build_regime.py` fitting models for both final (`2012-2023`) and tuning (`2012-2021`) windows, saving `artifacts/regime_{fit_window}.joblib` and `data/processed/regime_probs_{fit_window}.parquet`.
-  - [ ] **7.5** Write test `T-18` in `tests/test_regime.py`: verify regime ordering, probability row sums equal $1.0$, and strict posterior causality.
-  - [ ] **7.6** Generate `reports/regime_report.md` summarizing regime proportions and feature means across fit/validation windows.
+  - [x] **7.1** Implement `src/regime/regime_model.py`: fit 3-component diagonal GMM (`n_init=5`, `random_state=0`) on z-scored market features.
+  - [x] **7.2** Implement component sorting by ascending mean `m_vol20` ($0=\text{Calm}$, $1=\text{Choppy}$, $2=\text{Crisis}$).
+  - [x] **7.3** Implement causal EMA smoothing ($\text{span}=5$) across per-day posterior probabilities (`predict_proba`).
+  - [x] **7.4** Write `src/regime/build_regime.py` fitting models for both final (`2012-2023`) and tuning (`2012-2021`) windows, saving `artifacts/regime_{fit_window}.joblib` and `data/processed/regime_probs_{fit_window}.parquet`.
+  - [x] **7.5** Write test `T-18` in `tests/test_regime.py`: verify regime ordering, probability row sums equal $1.0$, and strict posterior causality.
+  - [x] **7.6** Generate `reports/regime_report.md` summarizing regime proportions and feature means across fit/validation windows.
 
 * **Artifacts Created:** `src/regime/regime_model.py`, `src/regime/build_regime.py`, `artifacts/regime_*.joblib`, `data/processed/regime_probs_*.parquet`, `reports/regime_report.md`, `tests/test_regime.py`
 * **Verification Criteria:** Test `T-18` passes; Crisis regime exhibits highest mean volatility and drawdown; report contains no post-2023 dates.
@@ -555,3 +555,4 @@ If running low on time, make cuts in this strict order and log each in the Decis
 | 2026-11-06 | Copilot assistant | Step 04 (4.1–4.5) | Added D-04–D-06 cleaning, calendar alignment, fill auditing, T-01 sanity coverage, processed parquet, and data-quality report. Processed 3,602 rows with zero fills, zero non-finite values, and no unexplained >25% return. Tests: 18 passed, 19 xfailed. | — | Step 05 |
 | 2026-11-06 | Copilot assistant | Step 05 (5.1–5.6) | Added causal stock indicators and market features, warm-up-trimmed feature pipeline, metadata, and T-02 causality coverage at 50 seeded cut dates. Generated aligned feature outputs with 3,553 rows from 2012-03-14 and no NaN/inf. Tests: 24 passed, 18 xfailed. | — | Step 06 |
 | 2026-11-06 | Copilot assistant | Step 06 (6.1–6.5) | Added reusable fit-window scaler with persisted load/transform parameters; generated final (2012–2023) and tuning (2012–2021) scalers and normalized full-series parquets. T-03 verifies no post-window fitting. Full suite: 28 passed, 17 xfailed. Fit-window moments are near zero/unit variance before required ±5 clipping. | — | Step 07 |
+| 2026-11-06 | Copilot assistant | Step 07 (7.1–7.6) | Added fit-window market scaler + diagonal GMM, volatility-ordered probabilities, causal EMA, dual-window build/report pipeline, and T-18 tests. Generated final/tuning models and 3,553-row probability outputs. Corrected report to score 2022 validation only with the tuning model. Regime tests: 4 passed; full suite: 32 passed, 16 xfailed. | — | Step 08 |
