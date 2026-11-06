@@ -1,0 +1,88 @@
+spec_version: "1.1"
+data:
+  tickers: [NVDA, AAPL, MSFT, GOOGL, AMZN]
+  start: "2012-01-01"
+  end: "2026-05-01"             # exclusive
+  auto_adjust: true
+  ffill_limit: 5
+windows:                         # inclusive date ranges
+  calm:  [["2012-01-01", "2019-12-31"], ["2021-01-01", "2021-12-31"]]
+  covid: [["2020-01-01", "2020-12-31"]]
+  rates: [["2022-01-01", "2023-12-31"]]
+  val_2022: ["2022-01-01", "2022-12-31"]
+  test_normal: ["2024-01-01", "2024-12-31"]
+  test_war: ["2026-02-27", "2026-04-30"]
+  war_drawdown: ["2026-02-27", "2026-03-30"]
+  war_recovery: ["2026-03-31", "2026-04-30"]
+  excluded: ["2025-01-01", "2026-02-26"]
+fit_windows:
+  final: ["2012-01-01", "2023-12-31"]
+  tuning: ["2012-01-01", "2021-12-31"]
+features:
+  sma_short: 10
+  sma_long: 50
+  rsi: 14
+  vol: 20
+  volume: 20
+  market_corr: 20
+  market_dd: 252
+  clip: 5.0
+regime:
+  enabled: true                  # false = one-stage control A1
+  k: 3
+  covariance: diag
+  n_init: 5
+  random_state: 0
+  ema_span: 5
+  include_novelty: false
+env:
+  initial_value: 1.0
+  initial_weights: equal         # 0.2 each, cash 0
+  step: 0.10
+  cost: 0.0010
+  slippage_mode: none            # none | vol_scaled
+  slippage_s0_bps: 2
+  execution: close               # close | next_open
+  include_weights_in_obs: true
+  episode_len: 126
+reward:
+  lambda1: null                  # set by TU-03
+  lambda2: null
+  downside_window: 20
+  reward_scale: 100
+curriculum:
+  enabled: true                  # false = control A2
+  stage_share: [0.4, 0.3, 0.3]
+  stage_mix: [[1.0, 0.0, 0.0], [0.4, 0.6, 0.0], [0.3, 0.3, 0.4]]   # calm, covid, rates
+  tuning_stage3_mix: [0.3, 0.7, 0.0]
+  eps_stage_start: [1.0, 0.2, 0.2]
+  eps_end: 0.05
+  eps_decay_frac_of_stage: 0.5
+agents:
+  gamma: 0.99
+  hidden: [128, 128]
+  lr: 1.0e-4
+  batch: 64
+  replay: 100000
+  learn_start: 1000
+  target_update: 500
+  train_steps: 150000
+  tuning_steps: 75000
+  n_quantiles: 20
+  kappa: 1.0
+  alpha_cvar: 0.2
+  seeds: [0, 1, 2]
+tuning:
+  lambda_grid: [[0.0, 0.0], [0.05, 0.002], [0.10, 0.005]]
+  default_cell: 1
+  seeds: [0, 1]
+scenarios:
+  high_vol_multiple: 2.0
+benchmarks:
+  rebalance_every: 21
+  mvo_window: 252
+metrics:
+  periods_per_year: 252
+  rolling_window: 21
+success:
+  sortino_fraction_of_best: 0.8

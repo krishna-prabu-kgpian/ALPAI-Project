@@ -34,12 +34,12 @@ If running low on time, make cuts in this strict order and log each in the Decis
 
 | Step ID | Step Title | Lane | Depends On | Status | Owner |
 |---|---|---|---|---|---|
-| **01** | Spec Review & Decision Log Sign-off | Core | 00 | `TODO` | All |
-| **02** | Repo Structure, Environment & Config | Core | 01 | `TODO` | |
-| **03** | Price Ingestion & Caching | Lane A | 02 | `TODO` | |
-| **04** | Price Cleaning & Data Quality Proof | Lane A | 03 | `TODO` | |
-| **05** | Stock & Market Feature Engineering | Lane A | 04 | `TODO` | |
-| **06** | Fit-Window Feature Normalization (z-score) | Lane A | 05 | `TODO` | |
+| **01** | Spec Review & Decision Log Sign-off | Core | 00 | `DONE` | All |
+| **02** | Repo Structure, Environment & Config | Core | 01 | `DONE` | |
+| **03** | Price Ingestion & Caching | Lane A | 02 | `DONE` | |
+| **04** | Price Cleaning & Data Quality Proof | Lane A | 03 | `DONE` | |
+| **05** | Stock & Market Feature Engineering | Lane A | 04 | `DONE` | |
+| **06** | Fit-Window Feature Normalization (z-score) | Lane A | 05 | `DONE` | |
 | **07** | Stage 1 Market-Regime Model (GMM) | Lane A | 06 | `TODO` | |
 | **08** | Portfolio Engine & Cost Model | Lane B | 04, 05 | `TODO` | |
 | **09** | Action Space & Observation Construction | Lane B | 06, 07, 08 | `TODO` | |
@@ -77,10 +77,10 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Align all team members on rules, split dates, and pre-registered criteria prior to writing code.
 
 * **Sub-tasks:**
-  - [ ] **1.1** Read `specs.md` completely (§0, §1, §2, §5, §7, §10, §21).
-  - [ ] **1.2** Review Decisions `DL-16` through `DL-26` with team.
-  - [ ] **1.3** Confirm Open Questions `OQ-01` through `OQ-09` defaults.
-  - [ ] **1.4** Update `specs.md` §21.1 Decision Log rows from *Proposed* to *Accepted*.
+  - [x] **1.1** Read `specs.md` completely (§0, §1, §2, §5, §7, §10, §21).
+  - [x] **1.2** Review Decisions `DL-16` through `DL-26` with team.
+  - [x] **1.3** Confirm Open Questions `OQ-01` through `OQ-09` defaults.
+  - [x] **1.4** Update `specs.md` §21.1 Decision Log rows from *Proposed* to *Accepted*.
 
 * **Artifacts Created:** Updated `specs.md`
 * **Verification Criteria:** No Decision Log row remains in *Proposed* state.
@@ -92,12 +92,12 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Instantiate project directory, configuration definitions, and test execution scaffold.
 
 * **Sub-tasks:**
-  - [ ] **2.1** Create directory structure per `specs.md` §20 (`data/raw`, `data/processed`, `artifacts/models`, `src/`, `tests/`, `reports/`, `results/`).
-  - [ ] **2.2** Copy configuration skeleton from `specs.md` §19 into `config/config.yaml`.
-  - [ ] **2.3** Populate `requirements.txt` with pinned dependencies (`pandas`, `numpy`, `pyarrow`, `pyyaml`, `yfinance`, `gymnasium`, `torch`, `scikit-learn`, `joblib`, `scipy`, `streamlit`, `plotly`, `pytest`).
-  - [ ] **2.4** Implement standard seed utility `src/utils/seed.py` for Python `random`, `numpy`, and `torch`.
-  - [ ] **2.5** Create placeholder pytest files `tests/test_*.py` for tests `T-01` through `T-20` marked `@pytest.mark.xfail`.
-  - [ ] **2.6** Create `Makefile` with basic execution targets (`clean`, `test`).
+  - [x] **2.1** Create directory structure per `specs.md` §20 (`data/raw`, `data/processed`, `artifacts/models`, `src/`, `tests/`, `reports/`, `results/`).
+  - [x] **2.2** Copy configuration skeleton from `specs.md` §19 into `config/config.yaml`.
+  - [x] **2.3** Populate `requirements.txt` with pinned dependencies (`pandas`, `numpy`, `pyarrow`, `pyyaml`, `yfinance`, `gymnasium`, `torch`, `scikit-learn`, `joblib`, `scipy`, `streamlit`, `plotly`, `pytest`).
+  - [x] **2.4** Implement standard seed utility `src/utils/seed.py` for Python `random`, `numpy`, and `torch`.
+  - [x] **2.5** Create placeholder pytest files `tests/test_*.py` for tests `T-01` through `T-20` marked `@pytest.mark.xfail`.
+  - [x] **2.6** Create `Makefile` with basic execution targets (`clean`, `test`).
 
 * **Artifacts Created:** Directory tree, `config/config.yaml`, `requirements.txt`, `src/utils/seed.py`, `tests/test_*.py`, `Makefile`
 * **Verification Criteria:** Executing `pytest` in a fresh virtualenv reports 20 `xfail` items without errors.
@@ -109,10 +109,10 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Download asset OHLCV data from Yahoo Finance and cache locally for reproducible offline access.
 
 * **Sub-tasks:**
-  - [ ] **3.1** Write `yfinance` probe script to confirm returned column formats for multi-ticker queries.
-  - [ ] **3.2** Create `src/data/download.py` using parameters from `config.yaml` (`tickers`, `start="2012-01-01"`, `end="2026-05-01"`, `auto_adjust=True`).
-  - [ ] **3.3** Implement `--refresh` flag logic: bypass network and load disk cache if flag is absent.
-  - [ ] **3.4** Write raw dataset metadata to `data/raw/prices_raw.meta.json` containing SHA-256 hash, row count, timestamp, and library versions.
+  - [x] **3.1** Write `yfinance` probe script to confirm returned column formats for multi-ticker queries.
+  - [x] **3.2** Create `src/data/download.py` using parameters from `config.yaml` (`tickers`, `start="2012-01-01"`, `end="2026-05-01"`, `auto_adjust=True`).
+  - [x] **3.3** Implement `--refresh` flag logic: bypass network and load disk cache if flag is absent.
+  - [x] **3.4** Write raw dataset metadata to `data/raw/prices_raw.meta.json` containing SHA-256 hash, row count, timestamp, and library versions.
 
 * **Artifacts Created:** `src/data/download.py`, `data/raw/prices_raw.parquet`, `data/raw/prices_raw.meta.json`
 * **Verification Criteria:** Raw file exists; re-running without `--refresh` makes zero network requests; final date index entry is `2026-04-30`.
@@ -124,11 +124,11 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Reindex asset price data onto a unified calendar index without look-ahead bias.
 
 * **Sub-tasks:**
-  - [ ] **4.1** Write `src/data/clean.py` to align all 5 assets on a shared calendar index.
-  - [ ] **4.2** Apply `ffill(limit=5)` to price columns; fill missing volume entries with `0`. (Strictly prohibition: no `bfill` or spline interpolation).
-  - [ ] **4.3** Save cleaned output to `data/processed/prices_clean.parquet`.
-  - [ ] **4.4** Write automated data sanity test `tests/test_data.py` (`T-01`): verify zero `NaN`/`inf`, strictly ascending dates, all prices $> 0$.
-  - [ ] **4.5** Create `reports/data_quality.md` documenting missing cell fill counts and top 10 single-day return movements per asset.
+  - [x] **4.1** Write `src/data/clean.py` to align all 5 assets on a shared calendar index.
+  - [x] **4.2** Apply `ffill(limit=5)` to price columns; fill missing volume entries with `0`. (Strictly prohibition: no `bfill` or spline interpolation).
+  - [x] **4.3** Save cleaned output to `data/processed/prices_clean.parquet`.
+  - [x] **4.4** Write automated data sanity test `tests/test_data.py` (`T-01`): verify zero `NaN`/`inf`, strictly ascending dates, all prices $> 0$.
+  - [x] **4.5** Create `reports/data_quality.md` documenting missing cell fill counts and top 10 single-day return movements per asset.
 
 * **Artifacts Created:** `src/data/clean.py`, `data/processed/prices_clean.parquet`, `reports/data_quality.md`, `tests/test_data.py`
 * **Verification Criteria:** Test `T-01` passes; total filled cells $< 0.1\%$; single-day movements $> 25\%$ explained in report.
@@ -140,12 +140,12 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Compute stationary per-stock indicators and macro market features on continuous time-series data.
 
 * **Sub-tasks:**
-  - [ ] **5.1** Implement `src/features/indicators.py` calculating `ret_1d`, `sma10_gap`, `sma50_gap`, `vol20`, and `vol_chg` on trailing windows.
-  - [ ] **5.2** Implement Wilder RSI 14 in `indicators.py` using `ewm(alpha=1/14, adjust=False)`.
-  - [ ] **5.3** Implement `src/features/market_features.py` computing basket features `m_vol20`, `m_corr20`, and trailing 252-day `m_dd`.
-  - [ ] **5.4** Construct pipeline script `src/features/build_features.py` generating `data/processed/features_raw.parquet` and `data/processed/market_features_raw.parquet`.
-  - [ ] **5.5** Drop leading warm-up rows containing `NaN` and output initial valid index date to `artifacts/feature_meta.json`.
-  - [ ] **5.6** Implement test `T-02` in `tests/test_features.py`: verify trailing window feature equality between truncated sub-series `data[:t+1]` and full dataset across $\ge 50$ random cut dates.
+  - [x] **5.1** Implement `src/features/indicators.py` calculating `ret_1d`, `sma10_gap`, `sma50_gap`, `vol20`, and `vol_chg` on trailing windows.
+  - [x] **5.2** Implement Wilder RSI 14 in `indicators.py` using `ewm(alpha=1/14, adjust=False)`.
+  - [x] **5.3** Implement `src/features/market_features.py` computing basket features `m_vol20`, `m_corr20`, and trailing 252-day `m_dd`.
+  - [x] **5.4** Construct pipeline script `src/features/build_features.py` generating `data/processed/features_raw.parquet` and `data/processed/market_features_raw.parquet`.
+  - [x] **5.5** Drop leading warm-up rows containing `NaN` and output initial valid index date to `artifacts/feature_meta.json`.
+  - [x] **5.6** Implement test `T-02` in `tests/test_features.py`: verify trailing window feature equality between truncated sub-series `data[:t+1]` and full dataset across $\ge 50$ random cut dates.
 
 * **Artifacts Created:** `src/features/indicators.py`, `src/features/market_features.py`, `src/features/build_features.py`, `data/processed/features_raw.parquet`, `data/processed/market_features_raw.parquet`, `artifacts/feature_meta.json`
 * **Verification Criteria:** Test `T-02` passes; output contains zero NaN values after warm-up drop; first valid row date aligns near mid-March 2012.
@@ -157,11 +157,11 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Normalize features to zero mean and unit variance using statistics derived strictly from training windows.
 
 * **Sub-tasks:**
-  - [ ] **6.1** Create standard scaler module `src/features/scaler.py` with `fit`, `transform`, `save`, and `load` methods, standard deviation floor $10^{-8}$, and fixed clipping bound $[-5.0, +5.0]$.
-  - [ ] **6.2** Fit scaler on **2012–2023** window and write parameters to `artifacts/scaler_2012-2023.json`.
-  - [ ] **6.3** Fit scaler on **2012–2021** window and write parameters to `artifacts/scaler_2012-2021.json`.
-  - [ ] **6.4** Transform features to generate `data/processed/features_z_2012-2023.parquet` and `data/processed/features_z_2012-2021.parquet`.
-  - [ ] **6.5** Write test `T-03` in `tests/test_scaler.py`: confirm transformation parameters are strictly locked to fit-window bounds.
+  - [x] **6.1** Create standard scaler module `src/features/scaler.py` with `fit`, `transform`, `save`, and `load` methods, standard deviation floor $10^{-8}$, and fixed clipping bound $[-5.0, +5.0]$.
+  - [x] **6.2** Fit scaler on **2012–2023** window and write parameters to `artifacts/scaler_2012-2023.json`.
+  - [x] **6.3** Fit scaler on **2012–2021** window and write parameters to `artifacts/scaler_2012-2021.json`.
+  - [x] **6.4** Transform features to generate `data/processed/features_z_2012-2023.parquet` and `data/processed/features_z_2012-2021.parquet`.
+  - [x] **6.5** Write test `T-03` in `tests/test_scaler.py`: confirm transformation parameters are strictly locked to fit-window bounds.
 
 * **Artifacts Created:** `src/features/scaler.py`, scaler JSON artifacts, normalized feature parquets, `tests/test_scaler.py`
 * **Verification Criteria:** Test `T-03` passes; normalized features over fit window exhibit mean $\approx 0$ and standard deviation $\approx 1$.
@@ -550,3 +550,8 @@ If running low on time, make cuts in this strict order and log each in the Decis
 | Date | Contributor | Task ID / Sub-task | Action Taken / Changes Made | Commit Hash | Next Step ID |
 |---|---|---|---|---|---|
 | 2026-11-06 | Team | Step 00 | Established initial specifications (`specs.md` v1.1) and master plan. | — | Step 01 |
+| 2026-11-06 | Copilot assistant | Step 02 (2.1–2.6) | Added the §20 scaffold, §19 config, pinned requirements, seed utility, T-01–T-20 xfail placeholders, and Makefile; verified 20 xfailed in an isolated virtualenv. Step 01 is now complete. | — | Step 03 |
+| 2026-11-06 | Copilot assistant | Step 03 (3.1–3.4) | Added the yfinance probe and adjusted-OHLCV downloader with verified offline caching, refresh support, and metadata writing. Upgraded and pinned yfinance 1.8.0; downloaded and cached 3,602 rows (2012-01-03 through 2026-04-30). | — | Step 04 |
+| 2026-11-06 | Copilot assistant | Step 04 (4.1–4.5) | Added D-04–D-06 cleaning, calendar alignment, fill auditing, T-01 sanity coverage, processed parquet, and data-quality report. Processed 3,602 rows with zero fills, zero non-finite values, and no unexplained >25% return. Tests: 18 passed, 19 xfailed. | — | Step 05 |
+| 2026-11-06 | Copilot assistant | Step 05 (5.1–5.6) | Added causal stock indicators and market features, warm-up-trimmed feature pipeline, metadata, and T-02 causality coverage at 50 seeded cut dates. Generated aligned feature outputs with 3,553 rows from 2012-03-14 and no NaN/inf. Tests: 24 passed, 18 xfailed. | — | Step 06 |
+| 2026-11-06 | Copilot assistant | Step 06 (6.1–6.5) | Added reusable fit-window scaler with persisted load/transform parameters; generated final (2012–2023) and tuning (2012–2021) scalers and normalized full-series parquets. T-03 verifies no post-window fitting. Full suite: 28 passed, 17 xfailed. Fit-window moments are near zero/unit variance before required ±5 clipping. | — | Step 07 |

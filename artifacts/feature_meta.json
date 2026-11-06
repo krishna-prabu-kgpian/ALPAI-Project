@@ -1,0 +1,29 @@
+{
+  "source": "C:\\Users\\KusumaAkshaya\\summer\\QFolio\\data\\processed\\prices_clean.parquet",
+  "source_rows": 3602,
+  "rows_after_warmup": 3553,
+  "warmup_rows_dropped": 49,
+  "first_valid_date": "2012-03-14",
+  "last_valid_date": "2026-04-30",
+  "tickers": [
+    "NVDA",
+    "AAPL",
+    "MSFT",
+    "GOOGL",
+    "AMZN"
+  ],
+  "stock_feature_order": [
+    "ret_1d",
+    "sma10_gap",
+    "sma50_gap",
+    "rsi14",
+    "vol20",
+    "vol_chg"
+  ],
+  "market_feature_order": [
+    "m_vol20",
+    "m_corr20",
+    "m_dd"
+  ],
+  "timestamp_utc": "2026-11-06T12:15:24.102128+00:00"
+}
