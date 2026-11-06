@@ -18,6 +18,7 @@ from numpy.typing import ArrayLike, NDArray
 
 from src.env.costs import CostModel
 from src.env.portfolio import mark_to_market, apply_trades
+from src.env.reward import calculate_reward
 
 N_BUCKETS = 6
 N_ACTIONS = 31
@@ -147,6 +148,9 @@ class PortfolioEnv(gym.Env):
         include_novelty: bool = False,
         cost: float = 0.001,
         rebalance_step: float = 0.10,
+        lambda1: float | None = None,
+        lambda2: float | None = None,
+        reward_scale: float | None = None,
         seed: int | None = None,
     ) -> None:
         super().__init__()
@@ -172,6 +176,15 @@ class PortfolioEnv(gym.Env):
         if not 0 < self.rebalance_step <= 1:
             raise ValueError("rebalance_step must be in (0, 1]")
         self.cost_model = CostModel(cost_rate=float(cost), slippage_mode="none")
+        config = self._load_config()
+        reward_config = config.get("reward", {})
+        self.lambda1 = self._coalesce_reward_value(lambda1, reward_config.get("lambda1"))
+        self.lambda2 = self._coalesce_reward_value(lambda2, reward_config.get("lambda2"))
+        self.reward_scale = float(
+            reward_config.get("reward_scale", 100.0)
+            if reward_scale is None
+            else reward_scale
+        )
 
         self.features, self.feature_dates, features_from_file = self._load_matrix(
             features,
@@ -206,7 +219,7 @@ class PortfolioEnv(gym.Env):
         ):
             raise ValueError("asset_returns must have one finite simple return per asset and date")
 
-        self._windows = self._load_windows()
+        self._windows = config.get("windows", {})
 
         obs_dim = self._observation_dim()
         self.action_space = spaces.Discrete(N_ACTIONS)
@@ -276,10 +289,14 @@ class PortfolioEnv(gym.Env):
         return returns.to_numpy(dtype=np.float64)
 
     @staticmethod
-    def _load_windows() -> dict[str, Any]:
+    def _load_config() -> dict[str, Any]:
         with (PROJECT_ROOT / "config" / "config.yaml").open(encoding="utf-8") as config_file:
-            config = yaml.safe_load(config_file)
-        return config.get("windows", {})
+            return yaml.safe_load(config_file)
+
+    @staticmethod
+    def _coalesce_reward_value(explicit: float | None, configured: Any) -> float:
+        value = explicit if explicit is not None else configured
+        return 0.0 if value is None else float(value)
 
     def _resolve_window(self, window: str) -> tuple[int, int]:
         if window not in self._windows:
@@ -425,7 +442,16 @@ class PortfolioEnv(gym.Env):
             if len(self._downside_window) >= 2
             else 0.0
         )
-        reward = float(100.0 * (r_gross - trade_result.cost / starting_value))
+        reward_result = calculate_reward(
+            r_gross=r_gross,
+            cost=trade_result.cost,
+            portfolio_value=starting_value,
+            sigma_down=sigma_down,
+            drawdown=drawdown,
+            lambda1=self.lambda1,
+            lambda2=self.lambda2,
+            reward_scale=self.reward_scale,
+        )
 
         self.current_index = next_index
         self.current_step += 1
@@ -445,9 +471,16 @@ class PortfolioEnv(gym.Env):
             "r_net": r_net,
             "drawdown": float(drawdown),
             "sigma_down": sigma_down,
+            "reward_components": reward_result.as_dict(),
             "action_id": int(action_id),
         }
-        return next_observation.astype(np.float32, copy=False), float(reward), terminated, truncated, info
+        return (
+            next_observation.astype(np.float32, copy=False),
+            reward_result.reward,
+            terminated,
+            truncated,
+            info,
+        )
 
     def render(self) -> None:
         return None

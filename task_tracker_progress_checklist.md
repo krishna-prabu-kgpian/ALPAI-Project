@@ -236,12 +236,12 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Implement single-deduction, risk-sensitive reward function incorporating downside volatility and drawdown penalties.
 
 * **Sub-tasks:**
-  - [ ] **11.1** Write `src/env/reward.py` evaluating:
+  - [x] **11.1** Write `src/env/reward.py` evaluating:
         $$\text{reward}_t = 100 \times \left( r_{\text{gross}} - \frac{\text{cost}_t}{V_t} - \lambda_1 \cdot \sigma_{\text{down}} - \lambda_2 \cdot \text{DD} \right)$$
-  - [ ] **11.2** Store breakdown of raw reward components inside step output `info` dictionary.
-  - [ ] **11.3** Implement test `T-09` in `tests/test_reward.py`: verify exact reward formula output within absolute tolerance $10^{-6}$.
-  - [ ] **11.4** Implement test `T-08`: verify an all-HOLD policy matches passive Buy & Hold return within absolute tolerance $10^{-9}$.
-  - [ ] **11.5** Write diagnostic suite `src/evaluation/diagnostics.py` measuring mean cash, action entropy, turnover, and % HOLD.
+  - [x] **11.2** Store breakdown of raw reward components inside step output `info` dictionary.
+  - [x] **11.3** Implement test `T-09` in `tests/test_reward.py`: verify exact reward formula output within absolute tolerance $10^{-6}$.
+  - [x] **11.4** Implement test `T-08`: verify an all-HOLD policy matches passive Buy & Hold return within absolute tolerance $10^{-9}$.
+  - [x] **11.5** Write diagnostic suite `src/evaluation/diagnostics.py` measuring mean cash, action entropy, turnover, and % HOLD.
 
 * **Artifacts Created:** `src/env/reward.py`, `src/evaluation/diagnostics.py`, `tests/test_reward.py`
 * **Verification Criteria:** Tests `T-08` and `T-09` pass; team code review approves environment step mechanics.
