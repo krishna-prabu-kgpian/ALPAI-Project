@@ -589,32 +589,32 @@ rl-portfolio/
 
 | ID | Original roadmap / v1.0 | Spec v1.1 says | Why | Status |
 |---|---|---|---|---|
-| DL-01 | 4 indicators, 5 × 6 obs | 6 features per stock; SMAs as price gaps | 5×6 needs 6; raw SMAs are non-stationary | Proposed |
-| DL-02 | 30-D observation | 36-D (30 + 6 weights) + 3 regime probabilities = **39-D** | Agent must see its holdings; regime is Stage 1's output | Proposed |
-| DL-03 | Start unspecified | All strategies start equal-weight, `V0 = 1`, entry not charged | Always-HOLD ≡ Buy&Hold is a free correctness test | Proposed |
-| DL-04 | Adj Close + raw O/H/L | `auto_adjust=True` for all OHLC | Mixing adjusted and raw prices corrupts indicators | Proposed |
-| DL-05 | "Tune λ empirically" | 3-cell grid, DQN, validation 2022, degeneracy guard, default `C1` | Fast, fair, catches the all-cash collapse | Proposed |
-| DL-06 | Distortion wired into the loss | Full-quantile loss; CVaR at action selection (acting and target) | Training only low quantiles biases the distribution | Proposed |
-| DL-07 | Execution unspecified | Fill at close of `t` (MOC); `next_open` as optional check | Standard, explicit, switchable | Proposed |
-| DL-08 | Slippage only in Task 4.2 | Separate vol-scaled sensitivity layer; headline = 10 bps only | Headline equals the specified cost model | Proposed |
+| DL-01 | 4 indicators, 5 × 6 obs | 6 features per stock; SMAs as price gaps | 5×6 needs 6; raw SMAs are non-stationary | Directed |
+| DL-02 | 30-D observation | 36-D (30 + 6 weights) + 3 regime probabilities = **39-D** | Agent must see its holdings; regime is Stage 1's output | Directed |
+| DL-03 | Start unspecified | All strategies start equal-weight, `V0 = 1`, entry not charged | Always-HOLD ≡ Buy&Hold is a free correctness test | Directed |
+| DL-04 | Adj Close + raw O/H/L | `auto_adjust=True` for all OHLC | Mixing adjusted and raw prices corrupts indicators | Directed |
+| DL-05 | "Tune λ empirically" | 3-cell grid, DQN, validation 2022, degeneracy guard, default `C1` | Fast, fair, catches the all-cash collapse | Directed |
+| DL-06 | Distortion wired into the loss | Full-quantile loss; CVaR at action selection (acting and target) | Training only low quantiles biases the distribution | Directed |
+| DL-07 | Execution unspecified | Fill at close of `t` (MOC); `next_open` as optional check | Standard, explicit, switchable | Directed |
+| DL-08 | Slippage only in Task 4.2 | Separate vol-scaled sensitivity layer; headline = 10 bps only | Headline equals the specified cost model | Directed |
 | DL-09 | COVID / rates as test regimes | **Superseded** by DL-16: they are now curriculum training windows | User objective | Superseded |
-| DL-10 | End date 2023-12-31 | `end="2026-05-01"` (exclusive) | Covers the war window; yfinance `end` is exclusive | Proposed |
-| DL-11 | "Discretize states" | 135-state compressed state; `market_regime` replaces vol bucket | A 39-D state cannot be tabulated | Proposed |
-| DL-12 | "No rolling metrics across the whole dataset" | Causal rolling features on the continuous series are required; leakage = fit beyond fit window, bfill, centered windows | Separate evaluation features would be NaN/wrong | Proposed |
-| DL-13 | No validation set | Tuning runs train on 2012–2021, validate on 2022 | Needed so test stays blind | Proposed |
-| DL-14 | Reward unscaled | `reward_scale = 100`; tiny λ grid | Daily returns are ≈ 1e-3 | Proposed |
-| DL-15 | Benchmarks "pay 10 bps" | Benchmarks share the env's simulator code | Structural fairness | Proposed |
+| DL-10 | End date 2023-12-31 | `end="2026-05-01"` (exclusive) | Covers the war window; yfinance `end` is exclusive | Directed |
+| DL-11 | "Discretize states" | 135-state compressed state; `market_regime` replaces vol bucket | A 39-D state cannot be tabulated | Directed |
+| DL-12 | "No rolling metrics across the whole dataset" | Causal rolling features on the continuous series are required; leakage = fit beyond fit window, bfill, centered windows | Separate evaluation features would be NaN/wrong | Directed |
+| DL-13 | No validation set | Tuning runs train on 2012–2021, validate on 2022 | Needed so test stays blind | Directed |
+| DL-14 | Reward unscaled | `reward_scale = 100`; tiny λ grid | Daily returns are ≈ 1e-3 | Directed |
+| DL-15 | Benchmarks "pay 10 bps" | Benchmarks share the env's simulator code | Structural fairness | Directed |
 | **DL-16** | Train 2012–2019, test 2020–2023 | Train 2012–2023 via curriculum; test = **normal 2024** + **Iran-war window 2026** | Project objective: stress periods are learned, tests are unseen normal + war | **Directed** |
 | **DL-17** | Single-stage learner | **Two-stage:** regime model → allocators (one-stage kept only as control A1) | Project objective | **Directed** |
-| DL-18 | — | Curriculum = fixed-order sampling schedule (not a new reward); same for all agents; control A2 | Keeps the comparison clean | Proposed |
-| DL-19 | 252-day episodes | 126-day episodes | One 253-day COVID window would otherwise give almost one episode | Proposed |
-| DL-20 | 5 seeds, tuned step counts | 3 seeds, fixed 150k steps, ordered time-box (TU-05) | Deadline | Proposed |
-| DL-21 | No success definition | Pre-registered SC-1…SC-4 and phase windows | Prevents post-hoc goalposts | Proposed |
-| DL-22 | 63-day rolling window | 21-day rolling window; CAGR blank under 252 days | War window is ≈ 44 days | Proposed |
-| DL-23 | Test feature-shift report before freeze | Test-window feature/regime reports only after Step 23 | Looking earlier risks tuning to test | Proposed |
-| DL-24 | T-16 on real data | T-16 on the formula with synthetic inputs | Real-data assertion can fail without a bug | Proposed |
-| DL-25 | — | 2025-01-01 → 2026-02-26 excluded | Tariff crash contaminates "normal"; would leak into 2024 test | Proposed |
-| DL-26 | — | Headline-model rule TU-04 (median Sortino on `val_2022`, guard first) | Answers "how do we pick the model" without touching test | Proposed |
+| DL-18 | — | Curriculum = fixed-order sampling schedule (not a new reward); same for all agents; control A2 | Keeps the comparison clean | Directed |
+| DL-19 | 252-day episodes | 126-day episodes | One 253-day COVID window would otherwise give almost one episode | Directed |
+| DL-20 | 5 seeds, tuned step counts | 3 seeds, fixed 150k steps, ordered time-box (TU-05) | Deadline | Directed |
+| DL-21 | No success definition | Pre-registered SC-1…SC-4 and phase windows | Prevents post-hoc goalposts | Directed |
+| DL-22 | 63-day rolling window | 21-day rolling window; CAGR blank under 252 days | War window is ≈ 44 days | Directed |
+| DL-23 | Test feature-shift report before freeze | Test-window feature/regime reports only after Step 23 | Looking earlier risks tuning to test | Directed |
+| DL-24 | T-16 on real data | T-16 on the formula with synthetic inputs | Real-data assertion can fail without a bug | Directed |
+| DL-25 | — | 2025-01-01 → 2026-02-26 excluded | Tariff crash contaminates "normal"; would leak into 2024 test | Directed |
+| DL-26 | — | Headline-model rule TU-04 (median Sortino on `val_2022`, guard first) | Answers "how do we pick the model" without touching test | Directed |
 
 ### 21.2 Open Questions (answer, then move to the Decision Log)
 
