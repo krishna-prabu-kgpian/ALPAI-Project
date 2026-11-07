@@ -615,6 +615,7 @@ rl-portfolio/
 | DL-24 | T-16 on real data | T-16 on the formula with synthetic inputs | Real-data assertion can fail without a bug | Directed |
 | DL-25 | — | 2025-01-01 → 2026-02-26 excluded | Tariff crash contaminates "normal"; would leak into 2024 test | Directed |
 | DL-26 | — | Headline-model rule TU-04 (median Sortino on `val_2022`, guard first) | Answers "how do we pick the model" without touching test | Directed |
+| DL-27 | `lambda1`, `lambda2` = null | `lambda1 = 0.10`, `lambda2 = 0.005` (cell C2) | TU-03 grid: all 6 DQN runs passed RW-04; median `val_2022` Sortino C0 −1.37, C1 −1.14, C2 −1.11 (`results/tuning/lambda_grid.csv`) | Directed |
 
 ### 21.2 Open Questions (answer, then move to the Decision Log)
 

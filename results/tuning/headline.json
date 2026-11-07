@@ -1,0 +1,37 @@
+{
+  "headline": "dqn",
+  "rule_applied": "highest median Sortino",
+  "ranking": [
+    {
+      "strategy": "dqn",
+      "median_sortino": -1.0015476645109804,
+      "median_max_drawdown": 0.5590794154168115,
+      "seeds_passing": 2
+    },
+    {
+      "strategy": "qrdqn_a1.0",
+      "median_sortino": -1.274148285684239,
+      "median_max_drawdown": 0.4433083743291481,
+      "seeds_passing": 2
+    },
+    {
+      "strategy": "tabular_q",
+      "median_sortino": -1.3522300570551964,
+      "median_max_drawdown": 0.4221496456717812,
+      "seeds_passing": 2
+    },
+    {
+      "strategy": "qrdqn_a0.2",
+      "median_sortino": -1.5359686368573742,
+      "median_max_drawdown": 0.581146186578765,
+      "seeds_passing": 2
+    }
+  ],
+  "steps": 150000,
+  "seeds": [
+    0,
+    1
+  ],
+  "lambda1": 0.1,
+  "lambda2": 0.005
+}

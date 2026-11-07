@@ -46,14 +46,14 @@ If running low on time, make cuts in this strict order and log each in the Decis
 | **10** | Gymnasium Environment Construction | Lane B | 09 | `TODO` | |
 | **11** | Risk-Sensitive Reward Function | Lane B | 10 | `TODO` | |
 | **12** | Curriculum Sampler & Split Integrity | Lane B | 10 | `TODO` | |
-| **13** | Metrics Calculation Engine | Lane C | 04 | `TODO` | |
-| **14** | Baseline Benchmarks (B&H, 1/N, MVO) | Lane C | 08, 13 | `TODO` | |
-| **15** | Training Infrastructure & Time Budget | Core | 11, 12, 13 | `TODO` | |
-| **16** | Standard Deep Q-Network (DQN) | Core | 15 | `TODO` | |
-| **17** | Reward Penalty Grid Search ($\lambda_1, \lambda_2$) | Core | 16 | `TODO` | |
-| **18** | Compressed-State Tabular Q-Learner | Core | 15, 17 | `TODO` | |
-| **19** | Distributional Quantile RL (QR-DQN) | Core | 16, 17 | `TODO` | |
-| **20** | Validation Scoring & Headline Selection | Core | 18, 19 | `TODO` | |
+| **13** | Metrics Calculation Engine | Lane C | 04 | `DONE` | |
+| **14** | Baseline Benchmarks (B&H, 1/N, MVO) | Lane C | 08, 13 | `DONE` | |
+| **15** | Training Infrastructure & Time Budget | Core | 11, 12, 13 | `DONE` | |
+| **16** | Standard Deep Q-Network (DQN) | Core | 15 | `DONE` | |
+| **17** | Reward Penalty Grid Search ($\lambda_1, \lambda_2$) | Core | 16 | `DONE` | |
+| **18** | Compressed-State Tabular Q-Learner | Core | 15, 17 | `DONE` | |
+| **19** | Distributional Quantile RL (QR-DQN) | Core | 16, 17 | `DONE` | |
+| **20** | Validation Scoring & Headline Selection | Core | 18, 19 | `DONE` | |
 | **21** | Full Curriculum Training Run | Core | 20 | `TODO` | |
 | **22** | Configuration & Codebase Freeze | Core | 14, 21 | `TODO` | |
 | **23** | Blind Backtest Execution | Core | 22 | `TODO` | |
@@ -268,10 +268,10 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Implement standardized calculation routines for financial, risk, and stability metrics.
 
 * **Sub-tasks:**
-  - [ ] **13.1** Write `src/evaluation/metrics.py` computing total return, CAGR, annualized volatility, Sharpe ratio, Sortino ratio, Max Drawdown, Calmar ratio, daily 5% CVaR, and turnover.
-  - [ ] **13.2** Implement logic leaving CAGR and Calmar blank (NaN) for evaluation periods under 252 trading days.
-  - [ ] **13.3** Implement rolling 21-day metric utility functions.
-  - [ ] **13.4** Write test `T-14` in `tests/test_metrics.py`: validate computed metrics against hand-calculated synthetic vectors.
+  - [x] **13.1** Write `src/evaluation/metrics.py` computing total return, CAGR, annualized volatility, Sharpe ratio, Sortino ratio, Max Drawdown, Calmar ratio, daily 5% CVaR, and turnover.
+  - [x] **13.2** Implement logic leaving CAGR and Calmar blank (NaN) for evaluation periods under 252 trading days.
+  - [x] **13.3** Implement rolling 21-day metric utility functions.
+  - [x] **13.4** Write test `T-14` in `tests/test_metrics.py`: validate computed metrics against hand-calculated synthetic vectors.
 
 * **Artifacts Created:** `src/evaluation/metrics.py`, `tests/test_metrics.py`
 * **Verification Criteria:** Test `T-14` passes.
@@ -283,11 +283,11 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Build non-RL benchmark strategies using shared execution environment rules and cost models.
 
 * **Sub-tasks:**
-  - [ ] **14.1** Implement Buy & Hold strategy `src/benchmarks/buy_hold.py`.
-  - [ ] **14.2** Implement periodic 21-day equal-weight rebalancing strategy `src/benchmarks/equal_weight.py`.
-  - [ ] **14.3** Implement trailing 252-day Mean-Variance Optimization strategy `src/benchmarks/mvo.py` using SciPy SLSQP with $10^{-6} \cdot I$ ridge regularization.
-  - [ ] **14.4** Write test `T-13` in `tests/test_benchmarks.py`: confirm fee parity across benchmark simulator and Gymnasium environment.
-  - [ ] **14.5** Dry-run benchmark strategies on `val_2022` window and write output CSVs to `results/validation/val_2022/`.
+  - [x] **14.1** Implement Buy & Hold strategy `src/benchmarks/buy_hold.py`.
+  - [x] **14.2** Implement periodic 21-day equal-weight rebalancing strategy `src/benchmarks/equal_weight.py`.
+  - [x] **14.3** Implement trailing 252-day Mean-Variance Optimization strategy `src/benchmarks/mvo.py` using SciPy SLSQP with $10^{-6} \cdot I$ ridge regularization.
+  - [x] **14.4** Write test `T-13` in `tests/test_benchmarks.py`: confirm fee parity across benchmark simulator and Gymnasium environment.
+  - [x] **14.5** Dry-run benchmark strategies on `val_2022` window and write output CSVs to `results/validation/val_2022/`.
 
 * **Artifacts Created:** `src/benchmarks/*.py`, `tests/test_benchmarks.py`, baseline CSVs in `results/validation/val_2022/`
 * **Verification Criteria:** Test `T-13` passes; benchmark outputs generated for validation window.
@@ -299,11 +299,11 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Establish generic training loop, replay buffers, greedy evaluator, and execute wall-clock benchmark.
 
 * **Sub-tasks:**
-  - [ ] **15.1** Write experience replay buffer `src/agents/replay.py`.
-  - [ ] **15.2** Construct main agent runner script `src/agents/train.py` handling configuration loading, seed setup, curriculum updates, and training log creation.
-  - [ ] **15.3** Create deterministic greedy backtest evaluator `src/evaluation/backtest.py`.
-  - [ ] **15.4** Implement execution check in `backtest.py` throwing an exception if evaluation is attempted on test windows without an active freeze tag.
-  - [ ] **15.5** Measure wall-clock execution time for 10,000 steps and publish time budget projection to `reports/time_budget.md`.
+  - [x] **15.1** Write experience replay buffer `src/agents/replay.py`.
+  - [x] **15.2** Construct main agent runner script `src/agents/train.py` handling configuration loading, seed setup, curriculum updates, and training log creation.
+  - [x] **15.3** Create deterministic greedy backtest evaluator `src/evaluation/backtest.py`.
+  - [x] **15.4** Implement execution check in `backtest.py` throwing an exception if evaluation is attempted on test windows without an active freeze tag.
+  - [x] **15.5** Measure wall-clock execution time for 10,000 steps and publish time budget projection to `reports/time_budget.md`.
 
 * **Artifacts Created:** `src/agents/replay.py`, `src/agents/train.py`, `src/evaluation/backtest.py`, `reports/time_budget.md`
 * **Verification Criteria:** Benchmark run executes 1,000 steps reproducibly across identical seeds; time budget report is populated.
@@ -315,9 +315,9 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Implement standard Deep Q-Network agent baseline.
 
 * **Sub-tasks:**
-  - [ ] **16.1** Implement PyTorch neural network and agent module `src/agents/dqn.py` (Architecture: `39 -> 128 -> 128 -> 31`, Huber loss, target network update frequency = 500 steps).
-  - [ ] **16.2** Write toy MDP unit test in `tests/test_dqn.py` verifying loss minimization on synthetic state inputs.
-  - [ ] **16.3** Run 10,000 step sanity verification to confirm action selection diversity and policy convergence over random agent baseline.
+  - [x] **16.1** Implement PyTorch neural network and agent module `src/agents/dqn.py` (Architecture: `39 -> 128 -> 128 -> 31`, Huber loss, target network update frequency = 500 steps).
+  - [x] **16.2** Write toy MDP unit test in `tests/test_dqn.py` verifying loss minimization on synthetic state inputs.
+  - [x] **16.3** Run 10,000 step sanity verification to confirm action selection diversity and policy convergence over random agent baseline.
 
 * **Artifacts Created:** `src/agents/dqn.py`, `tests/test_dqn.py`
 * **Verification Criteria:** Toy MDP loss decreases monotonically; agent action histogram demonstrates non-degenerate distribution.
@@ -329,10 +329,10 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Execute tuning grid search for risk penalty coefficients using validation data.
 
 * **Sub-tasks:**
-  - [ ] **17.1** Configure grid search parameter space: $C_0=(0, 0)$, $C_1=(0.05, 0.002)$, $C_2=(0.10, 0.005)$.
-  - [ ] **17.2** Train DQN agent over 2 seeds $\times$ 75,000 steps per grid cell using tuning pool (`2012-2021`).
-  - [ ] **17.3** Evaluate trained models on `val_2022` and filter out runs violating non-degeneracy criteria (`RW-04`).
-  - [ ] **17.4** Select cell with highest median Sortino ratio, update `config/config.yaml` with selected $\lambda_1, \lambda_2$, and record selection in `results/tuning/lambda_grid.csv`.
+  - [x] **17.1** Configure grid search parameter space: $C_0=(0, 0)$, $C_1=(0.05, 0.002)$, $C_2=(0.10, 0.005)$.
+  - [x] **17.2** Train DQN agent over 2 seeds $\times$ 75,000 steps per grid cell using tuning pool (`2012-2021`).
+  - [x] **17.3** Evaluate trained models on `val_2022` and filter out runs violating non-degeneracy criteria (`RW-04`).
+  - [x] **17.4** Select cell with highest median Sortino ratio, update `config/config.yaml` with selected $\lambda_1, \lambda_2$, and record selection in `results/tuning/lambda_grid.csv`.
 
 * **Artifacts Created:** `results/tuning/lambda_grid.csv`, updated `config/config.yaml`
 * **Verification Criteria:** Parameters $\lambda_1$ and $\lambda_2$ in `config.yaml` are updated from `null` to chosen float values.
@@ -344,10 +344,10 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Construct tabular Q-learning baseline using discretized market feature mapping.
 
 * **Sub-tasks:**
-  - [ ] **18.1** Create state compression module mapping continuous features to 135 discrete states ($\text{Regime}[3] \times \text{Trend}[3] \times \text{Leader}[5] \times \text{Cash}[3]$).
-  - [ ] **18.2** Fit trend tercile discretization bounds strictly on training fit window and export bounds to `artifacts/tabular_cuts.json`.
-  - [ ] **18.3** Write `src/agents/tabular_q.py` ($\alpha=0.1, \gamma=0.99$) using curriculum sampler.
-  - [ ] **18.4** Implement unit test verifying deterministic mapping and reachability across all 135 state indexes.
+  - [x] **18.1** Create state compression module mapping continuous features to 135 discrete states ($\text{Regime}[3] \times \text{Trend}[3] \times \text{Leader}[5] \times \text{Cash}[3]$).
+  - [x] **18.2** Fit trend tercile discretization bounds strictly on training fit window and export bounds to `artifacts/tabular_cuts.json`.
+  - [x] **18.3** Write `src/agents/tabular_q.py` ($\alpha=0.1, \gamma=0.99$) using curriculum sampler.
+  - [x] **18.4** Implement unit test verifying deterministic mapping and reachability across all 135 state indexes.
 
 * **Artifacts Created:** `src/agents/tabular_q.py`, `artifacts/tabular_cuts.json`, unit test in `tests/test_tabular.py`
 * **Verification Criteria:** State mapping unit test passes; tabular agent completes short training run without index errors.
@@ -359,11 +359,11 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Implement Quantile Regression DQN with CVaR action selection.
 
 * **Sub-tasks:**
-  - [ ] **19.1** Implement `src/agents/qrdqn.py` outputting $N=20$ quantiles per action ($31 \times 20$ output head).
-  - [ ] **19.2** Implement Quantile Huber Loss across all 20 quantiles; assert internal tensor shape `[Batch, N, N]`.
-  - [ ] **19.3** Implement CVaR action selection: sort quantiles ascending, average lowest $k=\lceil \alpha N \rceil$ values ($k=4$ for $\alpha=0.2$). Apply CVaR operator to both target action selection and greedy action execution.
-  - [ ] **19.4** Write test `T-11` in `tests/test_qrdqn.py`: validate learned quantiles against analytical normal distribution inverse CDF on a single-state MDP.
-  - [ ] **19.5** Write test `T-12`: verify sorting requirement and quantile slice indexing for $\alpha=1.0$ ($k=20$) and $\alpha=0.2$ ($k=4$).
+  - [x] **19.1** Implement `src/agents/qrdqn.py` outputting $N=20$ quantiles per action ($31 \times 20$ output head).
+  - [x] **19.2** Implement Quantile Huber Loss across all 20 quantiles; assert internal tensor shape `[Batch, N, N]`.
+  - [x] **19.3** Implement CVaR action selection: sort quantiles ascending, average lowest $k=\lceil \alpha N \rceil$ values ($k=4$ for $\alpha=0.2$). Apply CVaR operator to both target action selection and greedy action execution.
+  - [x] **19.4** Write test `T-11` in `tests/test_qrdqn.py`: validate learned quantiles against analytical normal distribution inverse CDF on a single-state MDP.
+  - [x] **19.5** Write test `T-12`: verify sorting requirement and quantile slice indexing for $\alpha=1.0$ ($k=20$) and $\alpha=0.2$ ($k=4$).
 
 * **Artifacts Created:** `src/agents/qrdqn.py`, `tests/test_qrdqn.py`
 * **Verification Criteria:** Tests `T-11` and `T-12` pass cleanly.
@@ -375,10 +375,10 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Rank candidate models on validation period `val_2022` and nominate primary headline strategy.
 
 * **Sub-tasks:**
-  - [ ] **20.1** Train candidate architectures (`tabular_q`, `dqn`, `qrdqn_a1.0`, `qrdqn_a0.2`) across 2 seeds $\times$ 150,000 steps on tuning pool (`2012-2021`).
-  - [ ] **20.2** Execute greedy evaluation passes over `val_2022` window and record output to `results/tuning/validation_comparison.csv`.
-  - [ ] **20.3** Filter out runs failing non-degeneracy guard (`RW-04`).
-  - [ ] **20.4** Apply headline selection tie-breaker hierarchy (`TU-04`) to select winning model architecture; record nomination to `results/tuning/headline.json`.
+  - [x] **20.1** Train candidate architectures (`tabular_q`, `dqn`, `qrdqn_a1.0`, `qrdqn_a0.2`) across 2 seeds $\times$ 150,000 steps on tuning pool (`2012-2021`).
+  - [x] **20.2** Execute greedy evaluation passes over `val_2022` window and record output to `results/tuning/validation_comparison.csv`.
+  - [x] **20.3** Filter out runs failing non-degeneracy guard (`RW-04`).
+  - [x] **20.4** Apply headline selection tie-breaker hierarchy (`TU-04`) to select winning model architecture; record nomination to `results/tuning/headline.json`.
 
 * **Artifacts Created:** `results/tuning/validation_comparison.csv`, `results/tuning/headline.json`
 * **Verification Criteria:** All 8 tuning runs are logged; single headline strategy is saved to `headline.json`.
@@ -558,3 +558,9 @@ If running low on time, make cuts in this strict order and log each in the Decis
 | 2026-11-06 | Copilot assistant | Step 07 (7.1–7.6) | Added fit-window market scaler + diagonal GMM, volatility-ordered probabilities, causal EMA, dual-window build/report pipeline, and T-18 tests. Generated final/tuning models and 3,553-row probability outputs. Corrected report to score 2022 validation only with the tuning model. Regime tests: 4 passed; full suite: 32 passed, 16 xfailed. | — | Step 08 |
 | 2026-11-06 | Copilot assistant | Step 08 (8.1–8.4) | Added deterministic portfolio trading/mark-to-market, 10 bps transaction costs, optional volatility-scaled slippage, and tests for T-05 through T-08 and T-16. Full suite: 40 passed, 11 xfailed. | — | Step 09 |
 | 2026-11-06 | Copilot assistant | Step 09 (9.1–9.4) | Added the canonical 31-action table, configurable observation assembly and artifact export. Verified T-04, configuration dimensions, and bitwise float32 parity with the stored feature and regime parquet rows. | — | Step 10 |
+| 2026-11-07 | Srishti Somya | Step 13 | Added `src/evaluation/metrics.py` (X-01…X-07, CAGR/Calmar blank under 252 days, rolling 21-day Sharpe/Sortino) and T-14 hand-computed tests. | — | Step 14 |
+| 2026-11-07 | Srishti Somya | Step 14 | Added shared benchmark simulator on `apply_trades`/`mark_to_market`, Buy&Hold, 1/N (21-day), MVO (SLSQP, 252-day, 1e-6 ridge), T-13 fee parity, and `val_2022` CSVs. Sortino: B&H −1.49, 1/N −1.41, MVO −1.18. | — | Step 15 |
+| 2026-11-07 | Srishti Somya | Steps 15–16 | Added replay buffer, training runner with checkpoints + config hash, greedy evaluator with FROZEN guard, RW-04 guard, `reports/time_budget.md` (10k steps: tabular 11 s, DQN 62 s, QR-DQN 95 s; seed-reproducible), and DQN (39→128→128→31, Huber, target 500) with toy-MDP tests. | — | Step 17 |
+| 2026-11-07 | Srishti Somya | Step 17 | λ grid, DQN, 2 seeds × 75k on tuning pool: all runs pass RW-04; median `val_2022` Sortino C0 −1.37, C1 −1.14, C2 −1.11 → λ1 = 0.10, λ2 = 0.005 written to config (DL-27). | — | Step 18 |
+| 2026-11-07 | Srishti Somya | Steps 18–19 | Added 135-state tabular Q-learner + `artifacts/tabular_cuts.json`, and QR-DQN (31×20 head, quantile Huber over all quantiles, sorted CVaR selection for acting and target) with T-11/T-12. | — | Step 20 |
+| 2026-11-07 | Srishti Somya | Step 20 | 4 allocators × 2 seeds × 150k on tuning pool; all 8 pass RW-04. Median `val_2022` Sortino: dqn −1.00, qrdqn_a1.0 −1.27, tabular_q −1.35, qrdqn_a0.2 −1.54 → headline `dqn` (`results/tuning/headline.json`). | — | Step 21 |

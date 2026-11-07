@@ -46,8 +46,8 @@ env:
   include_weights_in_obs: true
   episode_len: 126
 reward:
-  lambda1: null                  # set by TU-03
-  lambda2: null
+  lambda1: 0.10                  # set by TU-03 (cell C2, results/tuning/lambda_grid.csv)
+  lambda2: 0.005
   downside_window: 20
   reward_scale: 100
 curriculum:
