@@ -40,3 +40,15 @@ This pre-freeze report covers fit and validation windows only. No test-window re
 | Calm | 1491 | 0.155012 | 0.358280 | 0.021586 |
 | Choppy | 764 | 0.245352 | 0.637019 | 0.054975 |
 | Crisis | 213 | 0.466181 | 0.787744 | 0.150932 |
+
+## Curriculum window difficulty
+
+Daily-rebalanced equal-weight basket maximum drawdown, computed separately within each configured training segment. The calm value is the maximum across its two segments.
+
+| Window | Maximum drawdown |
+|---|---:|
+| calm | 33.13% |
+| covid | 28.44% |
+| rates | 40.89% |
+
+The observed severity order is rates > calm > covid, which differs from the prescribed curriculum order calm → covid → rates. Per CU-02/OQ-09, the training schedule remains unchanged pending a team decision; windows are not silently reordered.

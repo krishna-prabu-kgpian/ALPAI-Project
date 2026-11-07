@@ -253,10 +253,10 @@ If running low on time, make cuts in this strict order and log each in the Decis
 * **Goal:** Construct multi-stage training curriculum sampler and enforce temporal isolation checks.
 
 * **Sub-tasks:**
-  - [ ] **12.1** Implement `src/agents/curriculum.py` managing 3-stage sampling logic ($40\% / 30\% / 30\%$ step allocations) across `calm`, `covid`, and `rates` windows.
-  - [ ] **12.2** Add support for tuning mode (excluding `rates` window) and control `A2` mode (uniform random sampling without curriculum).
-  - [ ] **12.3** Append equal-weight basket max drawdown window difficulty table to `reports/regime_report.md`.
-  - [ ] **12.4** Implement tests in `tests/test_curriculum.py`: `T-19` (stage boundaries, window mix proportions, exclusion of post-2023 dates) and `T-20` (strict exclusion of test and held-out 2025 dates).
+  - [x] **12.1** Implement `src/agents/curriculum.py` managing 3-stage sampling logic ($40\% / 30\% / 30\%$ step allocations) across `calm`, `covid`, and `rates` windows.
+  - [x] **12.2** Add support for tuning mode (excluding `rates` window) and control `A2` mode (uniform random sampling without curriculum).
+  - [x] **12.3** Append equal-weight basket max drawdown window difficulty table to `reports/regime_report.md`.
+  - [x] **12.4** Implement tests in `tests/test_curriculum.py`: `T-19` (stage boundaries, window mix proportions, exclusion of post-2023 dates) and `T-20` (strict exclusion of test and held-out 2025 dates).
 
 * **Artifacts Created:** `src/agents/curriculum.py`, `tests/test_curriculum.py`, update to `reports/regime_report.md`
 * **Verification Criteria:** Tests `T-19` and `T-20` pass cleanly.
